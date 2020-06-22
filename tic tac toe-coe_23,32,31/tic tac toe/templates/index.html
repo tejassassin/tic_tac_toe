@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="../static/style3.css">
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.3/TweenMax.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.3/TimelineMax.min.js"></script>
+<title>Tic Tac Toe</title>
+
+</head>
+
+<body>
+<div style="width:30%; height:auto; margin:auto;min-width: 500px;text-align: center;" class="homep">
+    <center><img src="/static/title.gif" style="height:auto; width:60%;" class="title"></center>
+    <br>
+    <center><img src="/static/tic.jpg" style="height:auto; width:30%"></center>
+    <br>
+    <br>
+    <br>
+    <center>
+    <div class="home" style="margin:auto">
+        <a href="game.html"class="btn " style="margin-left:auto" title="play against a friend">Me vs Friend</a>
+        <a href="expert.html" class="btn " style="margin-left:5%" title="Alice is a smart girl who calculates all the possibilities from the given position and always plays the best move.">Me vs Alice</a>
+        <a href="com.html" class="btn " style="margin-left:5%" title="Bob is the younger brother of alice who is a lazy kid but has a photographic memory. He observes his sister alice's games and remembers all the positions that were reached in her games and then copies her moves. However if he reaches a position which his sister never played he makes a random move.">Me vs Bob</a>
+
+    </div>
+    </center>
+
+</div>
+<script>
+    $(document).ready(function(){
+        $(".homep").animate({
+             
+             opacity: '1',
+             height: 'auto',
+             width: '90%'
+
+         });
+        });
+
+</script>
+
+
+</body>

@@ -1,0 +1,295 @@
+
+<!DOCTYPE html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="/static/style.css">
+<title>Tic Tac Toe</title>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.3/TweenMax.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.3/TimelineMax.min.js"></script>
+</head>
+
+<body>
+
+
+<div class="main" style="height:100vh;width:100%;min-width: 700px;">
+
+    
+  <div class ="top" style="display:flex;">
+      <div><img src="/static/title.gif" style="height:60px; width:200px;padding: 10px;"style="flex:1;"></div>
+      <div class="nav" style="flex:1;text-align:right; ">
+          <a href="game.html" title="resets the game ">Restart</a>
+          <a href="index.html" title="Home" >Home</a>
+      </div>
+  </div>
+
+  <h1 id="inst" style="font-family:inherit; text-align:center; color:maroon;">click on a cell to play!!</h1>
+  <h1 id="inst1" style="display:none; font-family:inherit;text-align:center;color:maroon;">click the button to play again !!   </h1>
+
+  <div class="game" style="display:flex; width:90%; margin:auto;">
+      <div style="flex:3;">
+          
+              
+
+              <div class="row">
+                      <img class="cell" src="/static/cell.jpg" style="height:150px; width:150px;">
+                      <img class="cell" src="/static/cell.jpg" style="height:150px; width:150px;">
+                      <img class="cell" src="/static/cell.jpg" style="height:150px; width:150px;">
+                  
+              </div>
+
+              
+              <div class="row">
+                  <img class="cell" src="/static/cell.jpg" style="height:150px; width:150px;">
+                  <img class="cell" src="/static/cell.jpg" style="height:150px; width:150px;">
+                  <img class="cell" src="/static/cell.jpg" style="height:150px; width:150px;">
+              
+              </div>
+                   
+                  
+              <div class="row">
+                  <img class="cell" src="/static/cell.jpg" style="height:150px; width:150px;">
+                  <img class="cell" src="/static/cell.jpg" style="height:150px; width:150px;">
+                  <img class="cell" src="/static/cell.jpg" style="height:150px; width:150px;">
+              
+              </div>
+          
+              
+        
+      </div>
+      <br>
+      <br>
+
+      <div class="players" style=" flex:3;text-align: center; ">
+          
+            
+        
+              <div >
+                      <img  id="1" src="/static/white.jpg" style="height:auto; width:40px;">
+                      <a id="p1" style="font-size: 30px;font-family:Verdana, Geneva, Tahoma, sans-serif">Player 1 plays as </a>
+                      <img  src="/static/x.jpg" style="height:40px; width:40px;padding-left:20px;">
+                      <img  class="win1" src="/static/white.jpg" style="height:80px; width:60px;padding-left:20px;">
+                      
+              </div>
+              <br>
+              <div >
+                      <img  id="2" src="/static/white.jpg" style="height:auto; width:40px;">
+                    
+                      <a id="p2" style="font-size: 30px;font-family:Verdana, Geneva, Tahoma, sans-serif">Player 2 plays as </a>
+                      <img  src="/static/o.jpg" style="height:40px; width:40px;padding-left:20px;">
+                      <img  class="win2" src="/static/white.jpg" style="height:80px; width:60px; padding-left:20px;">
+                    
+                  
+              </div>
+              <br>
+              <div style="text-align:center;  ">   
+                <h1 class="draw" style="display:none; color:black; font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">It's a Draw</h1>
+                <br>
+              </div>
+
+              
+              <div style=" text-align: center; padding:30px 0px;">
+            
+                <center><a class="reset" style="display:none;" href="game.html">PLAY AGAIN  !!!</a></center>
+            
+              </div>
+
+            
+
+      </div>
+  </div>
+</div>
+
+
+<script>
+
+    
+    function play1(){
+        $(".win1").attr('src',"/static/win.gif");
+        $(".reset").css('display',"block");
+        $("#1").attr('src',"/static/white.jpg");
+        $("#2").attr('src',"/static/white.jpg");
+        $('img').off('click');
+        $('#inst').hide();
+        $('#inst1').show();
+        $(".win1").animate({
+                 height: 'auto',
+                 width: '80px'
+             });
+             $(".reset").animate({
+                 height: 'auto',
+                 width: '60%'
+             });
+
+        // $("html, body").animate({ scrollTop: $(document).height() }, 1000);
+        document.getElementById("p1").innerHTML = "Player 1 Won !!!";
+        document.getElementById("p2").innerHTML = "Player 2 lost :(";
+
+
+
+    }
+     
+    function play2(){
+        $(".win2").attr('src',"/static/win.gif");
+        $(".reset").css('display',"block");
+        $("#1").attr('src',"/static/white.jpg");
+        $("#2").attr('src',"/static/white.jpg");
+        $('img').off('click');
+        $('#inst').hide();
+        $('#inst1').show();
+        $(".win2").fadeIn(3000);
+        $(".win2").animate({
+                 height: 'auto',
+                 width: '80px'
+             });
+         $(".reset").animate({
+                 height: 'auto',
+                 width: '60%'
+             });
+
+
+        // $("html, body").animate({ scrollTop: $(document).height() }, 1000);
+        document.getElementById("p1").innerHTML = "Player 1 lost :(";
+        document.getElementById("p2").innerHTML = "Player 2 Won !!!";
+
+    }
+
+    c=0
+        $(document).ready(function(){
+          
+          $(".top").animate({
+                 
+                 opacity: '1',
+                 height: 'auto',
+                 width: '80%'
+             });
+             $(".game").animate({
+                 
+                 opacity: '.95',
+                 height: 'auto',
+                 width: '80%'
+             });
+            
+
+
+            $("img").click(function(){
+                // Change src attribute of image
+            if($(this).attr('src') == "/static/cell.jpg"){
+                if (c%2==0){
+                    $(this).attr("src", "/static/x.jpg");
+                    $("#2").attr('src',"/static/dot.png")
+                    $("#1").attr('src',"/static/white.jpg");
+
+                }
+                else{
+                    $(this).attr("src", "/static/o.jpg");
+                    $("#1").attr('src',"/static/dot.png");
+                    $("#2").attr('src',"/static/white.jpg");
+                }
+               c=c+1;
+
+              
+               
+            }
+            var x=document.getElementsByClassName("cell");
+         
+        
+            //check rows
+            for(i=0;i<9;i+=3)
+            {
+            if(($(x[i]).attr('src')=='/static/x.jpg')&&($(x[i+1]).attr('src')=='/static/x.jpg')&&($(x[i+2]).attr('src')=='/static/x.jpg'))
+              {
+                play1();
+              }
+            }
+            for(i=0;i<9;i+=3)
+            {
+            if(($(x[i]).attr('src')=='/static/o.jpg')&&($(x[i+1]).attr('src')=='/static/o.jpg')&&($(x[i+2]).attr('src')=='/static/o.jpg'))
+              {
+                play2();
+               
+              }
+            }
+            //check columns
+            for(i=0;i<3;i+=1)
+            {if(($(x[i]).attr('src')=='/static/x.jpg')&&($(x[i+3]).attr('src')=='/static/x.jpg')&&($(x[i+6]).attr('src')=='/static/x.jpg'))
+              {
+                play1();
+
+              }
+            }
+
+            for(i=0;i<3;i+=1)
+            {if(($(x[i]).attr('src')=='/static/o.jpg')&&($(x[i+3]).attr('src')=='/static/o.jpg')&&($(x[i+6]).attr('src')=='/static/o.jpg'))
+              {
+                play2();
+
+              }
+            }
+            
+           //check diagonals
+            if(($(x[0]).attr('src')=='/static/x.jpg')&&($(x[4]).attr('src')=='/static/x.jpg')&&($(x[8]).attr('src')=='/static/x.jpg'))
+              {
+                play1();
+
+              }
+            
+            if(($(x[2]).attr('src')=='/static/x.jpg')&&($(x[4]).attr('src')=='/static/x.jpg')&&($(x[6]).attr('src')=='/static/x.jpg'))
+              {
+                play1();
+
+              }
+            
+              if(($(x[0]).attr('src')=='/static/o.jpg')&&($(x[4]).attr('src')=='/static/o.jpg')&&($(x[8]).attr('src')=='/static/o.jpg'))
+              {
+                play2();
+              }
+            
+            if(($(x[2]).attr('src')=='/static/o.jpg')&&($(x[4]).attr('src')=='/static/o.jpg')&&($(x[6]).attr('src')=='/static/o.jpg'))
+              {
+                play2();
+
+              }
+
+            
+             if((c>=9) && ($(".win1").attr('src')=="/static/white.jpg") && ($(".win2").attr('src')=="/static/white.jpg"))
+             {
+                $(".draw").css('display',"block");
+                $(".reset").css('display',"block");
+                $("#1").attr('src',"/static/white.jpg");
+                $("#2").attr('src',"/static/white.jpg");
+                $('#inst').hide();
+                $('#inst1').show();
+                // $("html, body").animate({ scrollTop: $(document).height() }, 1000);
+                $(".reset").animate({
+                 height: 'auto',
+                 width: '60%'
+                 });
+              }
+
+
+
+
+
+            });    
+        });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+
+
+
+
+</body>

@@ -1,0 +1,583 @@
+
+<!DOCTYPE html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="/static/style.css">
+<title>Tic Tac Toe</title>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.3/TweenMax.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.3/TimelineMax.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+</head>
+
+<body>
+    <br>
+    
+<div class="main" style="height:100vh;width:100%;min-width: 700px;align-content: center;">
+
+    
+    <div class ="top" style="display:flex;">
+        <div><img src="/static/title.gif" style="height:60px; width:200px;"style="flex:1;"></div>
+        <div class="nav" style="flex:1;text-align:right; ">
+            <a href="expert.html" title="resets the game ">Restart</a>
+            <a href="index.html" title="Home" >Home</a>
+        </div>
+    </div>
+
+  <h1 id="inst" style="font-family:inherit;text-align:center;color:maroon">click on a cell to play!!</h1>
+  <h1 id="inst1" style="display:none; font-family:inherit;text-align:center;color:maroon;">click the button to play again !!   </h1>
+
+  <div class="game" style="display:flex; width:90%; margin:auto;">
+       
+                  
+                  <div style="flex:3;text-align: center;">
+                      
+                            
+
+                      <div class="row">
+                              <img class="ce" src="/static/cell.jpg" style="height:150px; width:150px;">
+                              <img class="ce" src="/static/cell.jpg" style="height:150px; width:150px;">
+                              <img class="ce" src="/static/cell.jpg" style="height:150px; width:150px;">
+                          
+                      </div>
+
+                      
+                      <div class="row">
+                          <img class="ce" src="/static/cell.jpg" style="height:150px; width:150px;">
+                          <img class="ce" src="/static/cell.jpg" style="height:150px; width:150px;">
+                          <img class="ce" src="/static/cell.jpg" style="height:150px; width:150px;">
+                      
+                      </div>
+                          
+                          
+                      <div class="row">
+                          <img class="ce" src="/static/cell.jpg" style="height:150px; width:150px;">
+                          <img class="ce" src="/static/cell.jpg" style="height:150px; width:150px;">
+                          <img class="ce" src="/static/cell.jpg" style="height:150px; width:150px;">
+                      
+                      </div>
+                  
+                </div>
+
+                <div class="players" style=" flex:3;text-align: center;">
+          
+            
+        
+                  <div >
+                          <img  id="1" src="/static/dot.png" style="height:auto; width:40px;">
+                          <a id="p1" style="font-size: 30px;font-family:Verdana, Geneva, Tahoma, sans-serif">You play as </a>
+                          <img  src="/static/x.jpg" style="height:40px; width:40px;padding-left:20px;">
+                          <img  class="win1" src="/static/white.jpg" style="height:80px; width:60px;padding-left:20px;">
+                          
+                  </div>
+                  <br>
+                  <br>
+                  <br>
+
+
+                  <div >
+                          <img
+                          id="2"
+                          src="/static/alice.jpg"
+                          style="height:90px; width:100px;padding-right:10px;border-radius:10px;"
+                        />
+                        
+                          <a id="p2" style="font-size: 30px;font-family:Verdana, Geneva, Tahoma, sans-serif">Alice plays as </a>
+                          <img  src="/static/o.jpg" style="height:40px; width:40px;padding-left:20px;">
+                          <img  class="win2" src="/static/white.jpg" style="height:80px; width:60px; padding-left:20px;">
+                        
+                      
+                  </div>
+                  <br>
+                  <div style="text-align:center;  ">   
+                    <h1 class="draw" style="display:none; color:black; font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">It's a Draw</h1>
+                    <br>
+                  </div>
+            
+                  
+                  <div style=" text-align: center; padding:30px 0px;">
+                
+                    <center><a class="reset" style="display:none;" href="expert.html">PLAY AGAIN  !!!</a></center>
+                
+                  </div>
+            
+                
+            
+            </div>
+      
+
+      
+  </div>
+
+</div>
+
+
+<script>
+
+var board = 
+        [ 
+            [ '_', '_', '_' ], 
+            [ '_', '_', '_' ], 
+            [ '_', '_', '_' ] 
+        ]; 
+      
+
+  // Driver code 
+  var bstmove = [-1,-1];
+ 
+
+    
+  var player = 'o', opponent = 'x'; 
+    
+  // This function returns true if there are moves 
+  // remaining on the board. It returns false if 
+  // there are no moves left to play. 
+  function isMovesLeft(board) 
+  { 
+      for (var i = 0; i<3; i++) 
+          for (var j = 0; j<3; j++) 
+              if (board[i][j]=='_') 
+                  return true; 
+      return false; 
+  } 
+    
+  // This is the evaluation function as discussed 
+  // in the previous article ( http://goo.gl/sJgv68 ) 
+  function evaluate(b) 
+  { 
+      // Checking for Rows for X or O victory. 
+      for (var row = 0; row<3; row++) 
+      { 
+          if (b[row][0]==b[row][1] && 
+              b[row][1]==b[row][2]) 
+          { 
+              if (b[row][0]==player) 
+                  return +10; 
+              else if (b[row][0]==opponent) 
+                  return -10; 
+          } 
+      } 
+    
+      // Checking for Columns for X or O victory. 
+      for (var col = 0; col<3; col++) 
+      { 
+          if (b[0][col]==b[1][col] && 
+              b[1][col]==b[2][col]) 
+          { 
+              if (b[0][col]==player) 
+                  return +10; 
+    
+              else if (b[0][col]==opponent) 
+                  return -10; 
+          } 
+      } 
+    
+      // Checking for Diagonals for X or O victory. 
+      if (b[0][0]==b[1][1] && b[1][1]==b[2][2]) 
+      { 
+          if (b[0][0]==player) 
+              return +10; 
+          else if (b[0][0]==opponent) 
+              return -10; 
+      } 
+    
+      if (b[0][2]==b[1][1] && b[1][1]==b[2][0]) 
+      { 
+          if (b[0][2]==player) 
+              return +10; 
+          else if (b[0][2]==opponent) 
+              return -10; 
+      } 
+    
+      // Else if none of them have won then return 0 
+      return 0; 
+  } 
+    
+  
+  
+  
+  
+  
+  // This is the minimax function. It considers all 
+  // the possible ways the game can go and returns 
+  // the value of the board 
+  function minimax( board,depth, isMax) 
+  { 
+      var score = evaluate(board); 
+      
+      // If Maximizer has won the game return his/her 
+      // evaluated score 
+      if (score == 10) 
+          return (score-depth); 
+    
+      // If Minimizer has won the game return his/her 
+      // evaluated score 
+      if (score == -10) 
+          return (score+depth); 
+    
+      // If there are no more moves and no winner then 
+      // it is a tie 
+      if (isMovesLeft(board)==false) 
+          return 0; 
+
+
+      // If this maximizer's move 
+      if (isMax) 
+      { 
+          var best = -1000; 
+      
+          // Traverse all cells 
+          for (var i = 0; i<3; i++) 
+          { 
+              for (var j = 0; j<3; j++) 
+              { 
+                  // Check if cell is empty 
+                  if (board[i][j]=='_') 
+                  { 
+                      // Make the move 
+                      board[i][j] = player; 
+    
+                      // Call minimax recursively and choose 
+                      // the maximum value 
+                      best = Math.max( best,minimax(board, depth+1, !isMax) ); 
+                      // Undo the move 
+                      board[i][j] = '_'; 
+                  } 
+              } 
+          } 
+          return best; 
+      } 
+    
+      // If this minimizer's move 
+      else
+      { 
+          var best = 1000; 
+
+    
+          // Traverse all cells 
+          for (var i = 0; i<3; i++) 
+          { 
+              for (var j = 0; j<3; j++) 
+              { 
+                  // Check if cell is empty 
+                  if (board[i][j]=='_') 
+                  { 
+                      // Make the move 
+                      board[i][j] = opponent; 
+    
+                      // Call minimax recursively and choose 
+                      // the minimum value 
+
+                      best = Math.min(best, minimax(board, depth+1, !isMax)); 
+                      
+                      // Undo the move 
+                      board[i][j] = '_'; 
+                  } 
+              } 
+          } 
+          return best; 
+      } 
+  } 
+    
+  // This will return the best possible move for the player 
+  function findBestMove(board) 
+  { 
+      var bestVal = -1000; 
+       
+     
+    
+      // Traverse all cells, evaluate minimax function for 
+      // all empty cells. And return the cell with optimal 
+      // value. 
+      for (var i = 0; i<3; i++) 
+      { 
+          for (var j = 0; j<3; j++) 
+          { 
+              // Check if cell is empty 
+              if (board[i][j]=='_') 
+              { 
+                  // Make the move 
+                  board[i][j] = player; 
+    
+                  // compute evaluation function for this 
+                  // move. 
+                  
+                  var moveVal = minimax(board, 0, false); 
+                 
+                  // Undo the move 
+                  board[i][j] = '_'; 
+    
+                  // If the value of the current move is 
+                  // more than the best value, then update 
+                  // best/ 
+     
+
+                  if (moveVal > bestVal) 
+                  { 
+                      bestVal = moveVal; 
+                      bstmove[0] = i; 
+                      
+                         
+                      bstmove[1] = j; 
+                      
+                  } 
+              
+              } 
+          } 
+      } 
+    
+      
+      return bstmove; 
+  } 
+    
+
+  </script>
+
+
+<script type=text/javascript>
+    $(function() {
+      $('.ce').bind('click', function() {
+        $.getJSON('/expert',
+            function(data) {
+          //do nothing
+        });
+        return false;
+      });
+    });
+</script>
+
+
+
+
+
+<script>
+
+
+          
+    function play1(){
+        $(".win1").attr('src',"/static/win.gif");
+        $(".reset").css('display',"block");
+        $("#1").attr('src',"/static/white.jpg");
+        $(".cell").off('click');
+        $('img').off('click');
+        $('#inst').hide();
+        $('#inst1').show();
+        $(".win1").animate({
+                 height: 'auto',
+                 width: '100px'
+             });
+             $(".reset").animate({
+                 height: 'auto',
+                 width: '60%'
+             });
+        // $("html, body").animate({ scrollTop: $(document).height() }, 1000);
+        
+    }
+     
+    function play2(){
+        $(".win2").attr('src',"/static/win.gif");
+        $(".reset").css('display',"block");
+        $("#1").attr('src',"/static/white.jpg");
+        $("#2").attr('src',"/static/halice.jpg");
+        $('.cell').off('click');
+        $('#inst').hide();
+        $('#inst1').show();
+        $('img').off('click');
+        $(".win2").animate({
+                 height: 'auto',
+                 width: '80px'
+             });
+             $(".reset").animate({
+                 height: 'auto',
+                 width: '60%'
+             });
+        // $("html, body").animate({ scrollTop: $(document).height() }, 1000);
+        document.getElementById("p1").innerHTML = "You lost :(";
+        document.getElementById("p2").innerHTML = "Alice won !!!";
+    }
+
+    var tmp= new Array();
+    tmp.push(new Array(2));
+
+    var c1=0;
+  
+    var x2=1;
+    var l=0;
+    var j;
+    var flag=0;
+    var a,b;
+    var g="........."
+        $(document).ready(function(){
+            $(".top").animate({
+                 
+                 opacity: '1',
+                 height: 'auto',
+                 width: '80%'
+             });
+
+             $(".game").animate({
+                 
+                 opacity: '.95',
+                 height: 'auto',
+                 width: '80%'
+             });
+
+
+
+           
+                  //human vs computer
+                
+                    $(".ce").click(function(){
+                        // Change src attribute of image
+                    if($(this).attr('src') == "/static/cell.jpg"){
+                      var ce=document.getElementsByClassName("ce");
+                      
+                        i=$(ce).index(this);
+                        
+                        if (c1%2==0){
+                            $(this).attr("src", "/static/x.jpg");
+
+                            g=g.replaceAt(i, "x");
+                            a=Math.floor(i/3);
+                            b=i%3;
+                            board[a][b]='x';
+                            c1++;
+                            tmp[0][0]=g;
+                            check("ce",c1);
+                            let dat1 = JSON.stringify({"key":board});
+                            
+                            fetch("http://127.0.0.1:5000/findbestmove",{
+                                method:"POST",
+                                body:dat1
+                            }).then(res=>{
+                                return res.json();
+                            }).then(data=>{
+                                console.log(data['data']);
+                                bstmove = data['data'];
+                                a=bstmove[0];
+                            b=bstmove[1];
+                            $(ce[a*3+b]).attr("src", "/static/o.jpg");
+                            board[a][b]='o';
+                            tmp[0][1]=a*3+b;
+
+                            let dat = JSON.stringify({"key":tmp[0]});
+                            console.log(dat)
+                            fetch("http://127.0.0.1:5000/expert",{
+                                method:"POST",
+                                body:dat
+                            }).then(data=>{
+                                console.log(data);
+                            }).catch(err=>{
+                                console.log(err);
+                            });
+
+
+                            g=g.replaceAt(a*3+b, "o");
+
+                            l=l+1;
+                            c1++;
+                            check("ce",c1);
+                          
+                            }).catch(err=>{
+                                console.log(err);
+                            });
+                            // bstmove = findBestMove(board); 
+                        
+                        } 
+                      
+                    }
+                    
+                    });
+
+        });  
+
+        String.prototype.replaceAt=function(index, replacement) {
+    return this.substr(0, index) + replacement+ this.substr(index + replacement.length);
+}
+
+
+      function check(mem,n){
+       
+          var x=document.getElementsByClassName(mem);
+            //check rows
+            for(i=0;i<9;i+=3)
+            {
+            if(($(x[i]).attr('src')=='/static/x.jpg')&&($(x[i+1]).attr('src')=='/static/x.jpg')&&($(x[i+2]).attr('src')=='/static/x.jpg'))
+              {play1();
+              }
+            }
+
+            for(i=0;i<9;i+=3)
+            {
+            if(($(x[i]).attr('src')=='/static/o.jpg')&&($(x[i+1]).attr('src')=='/static/o.jpg')&&($(x[i+2]).attr('src')=='/static/o.jpg'))
+              {play2();
+              }
+            }
+            //check columns
+            for(i=0;i<3;i+=1)
+            {if(($(x[i]).attr('src')=='/static/x.jpg')&&($(x[i+3]).attr('src')=='/static/x.jpg')&&($(x[i+6]).attr('src')=='/static/x.jpg'))
+              {
+                play1();
+              }
+            }
+
+            for(i=0;i<3;i+=1)
+            {if(($(x[i]).attr('src')=='/static/o.jpg')&&($(x[i+3]).attr('src')=='/static/o.jpg')&&($(x[i+6]).attr('src')=='/static/o.jpg'))
+              {
+                play2();
+              }
+            }
+            
+           //check diagonals
+            if(($(x[0]).attr('src')=='/static/x.jpg')&&($(x[4]).attr('src')=='/static/x.jpg')&&($(x[8]).attr('src')=='/static/x.jpg'))
+              {
+                play1();
+              }
+            
+            if(($(x[2]).attr('src')=='/static/x.jpg')&&($(x[4]).attr('src')=='/static/x.jpg')&&($(x[6]).attr('src')=='/static/x.jpg'))
+              {
+                play1();
+              }
+            
+              if(($(x[0]).attr('src')=='/static/o.jpg')&&($(x[4]).attr('src')=='/static/o.jpg')&&($(x[8]).attr('src')=='/static/o.jpg'))
+              {
+                play2();
+              }
+            
+            if(($(x[2]).attr('src')=='/static/o.jpg')&&($(x[4]).attr('src')=='/static/o.jpg')&&($(x[6]).attr('src')=='/static/o.jpg'))
+              {i
+                play2();
+              }
+
+            
+             if((n==9) && ($(".win1").attr('src')=="/static/white.jpg") && ($(".win2").attr('src')=="/static/white.jpg"))
+             {
+                $(".draw").css('display',"block");
+                $(".reset").css('display',"block");
+                $("#1").attr('src',"/static/white.jpg");
+                $("#2").attr('src',"/static/alice2.jpg");
+                $('#inst').hide();
+                $('#inst1').show();
+                // $("html, body").animate({ scrollTop: $(document).height() }, 1000);
+                $(".reset").animate({
+                 height: 'auto',
+                 width: '60%'
+             });
+              }
+
+      }
+
+
+
+
+
+             
+       
+
+
+</script>
+
+
+
+
+</body>
